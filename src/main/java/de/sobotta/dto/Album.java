@@ -1,6 +1,13 @@
 package de.sobotta.dto;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Album {
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;

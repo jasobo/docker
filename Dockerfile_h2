@@ -8,5 +8,8 @@ WORKDIR /h2
 COPY ./h2-2.2.224.jar /h2/h2.jar
 COPY ./testdb /h2/testdb
 
+# Expose H2 default ports
+EXPOSE 9092
+
 # Befehl zum Starten der H2-Datenbank
-CMD ["java", "-cp", "h2.jar", "org.h2.tools.Server", "-ifNotExists", "-tcp", "-tcpAllowOthers"]
+CMD ["java", "-cp", "h2.jar", "org.h2.tools.Server", "-tcp", "-tcpAllowOthers", "-web", "-webAllowOthers", "-ifNotExists"]

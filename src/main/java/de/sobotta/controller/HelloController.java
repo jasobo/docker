@@ -2,6 +2,7 @@ package de.sobotta.controller;
 
 import de.sobotta.dto.Album;
 import de.sobotta.services.AlbumService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +12,17 @@ import java.util.List;
 //@RequestMapping("/api")
 public class HelloController {
 
-    private AlbumService albumService;
+    private final AlbumService albumService;
 
-    @Value("${spring.datasource.username}")
-    private String username;
+    @Autowired
+    public HelloController (AlbumService albumService){
+        this.albumService = albumService;
+    }
+
+
     @GetMapping("/")
     public String helloWorld(){
-        return "hello world " +username;
+        return "hello world ";
     }
 
     @GetMapping("/hello/{name}")
@@ -30,14 +35,19 @@ public class HelloController {
         albumService.save(album);
     }
 
+    @GetMapping("/all")
+    public List<Album> showAll(){
+        return albumService.showAll();
+    }
+
     @GetMapping("/{artist}")
     public List<Album> findByArtist(@PathVariable String artist){
         return albumService.find(artist);
     }
 
-    @GetMapping("/specific/{id}")
-    public Album findById(@PathVariable long id){
-        return albumService.findSpec(id);
+    @GetMapping("/specific/{name}")
+    public Album findByName(@PathVariable String name){
+        return albumService.findSpec(name);
     }
 
     @DeleteMapping("/{id}")

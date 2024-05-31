@@ -1,15 +1,11 @@
 # Verwenden eines passenden Basis-Images mit H2-Datenbank
 FROM openjdk:17-jdk-alpine
 
-# Setzen Sie das Arbeitsverzeichnis im Container
 WORKDIR /h2
 
-# Kopieren Sie die H2-Datenbank-JAR-Datei und das Testdatenverzeichnis in den Container
 COPY ./h2-2.2.224.jar /h2/h2.jar
 COPY ./testdb /h2/testdb
 
-# Expose H2 default ports
 EXPOSE 9092
 
-# Befehl zum Starten der H2-Datenbank
 CMD ["java", "-cp", "h2.jar", "org.h2.tools.Server", "-tcp", "-tcpAllowOthers", "-web", "-webAllowOthers", "-ifNotExists"]

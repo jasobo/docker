@@ -1,11 +1,9 @@
 # Verwenden eines passenden Basis-Images mit H2-Datenbank
 FROM openjdk:17-jdk-alpine
-
 WORKDIR /h2
 
 COPY ./h2-2.2.224.jar /h2/h2.jar
 COPY ./testdb /h2/testdb
 
 EXPOSE 9092
-
 CMD ["java", "-cp", "h2.jar", "org.h2.tools.Server", "-tcp", "-tcpAllowOthers", "-web", "-webAllowOthers", "-ifNotExists"]

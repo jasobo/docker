@@ -10,6 +10,6 @@ mvn clean package
 docker network rm mynetworkdocker
 docker network create mynetworkdocker
 docker build -t my-h2-db -f Dockerfile_h2 .
-docker run --name h2-db --network mynetworkdocker -d -p 9092:9092 -p 8082:8082 my-h2-db
+docker run --name h2-db --network mynetworkdocker -d -v /c/Users/Unterwegs/IdeaProjects/dockerselftest/src/main/resources:/h2/testdb -p 9092:9092 my-h2-db
 docker build -t my-app -f Dockerfile .
-docker run -d --name my-app --network mynetworkdocker -p 8080:8080 -e SPRING_DATASOURCE_URL=jdbc:h2:tcp://h2-db:9092/./testdb -e SPRING_DATASOURCE_USERNAME=user -e SPRING_DATASOURCE_PASSWORD=password my-app
+docker run -d --name my-app --network mynetworkdocker -p 8080:8080 my-app

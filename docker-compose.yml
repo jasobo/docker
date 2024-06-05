@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  app:
+    image: my-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - h2-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:h2:tcp://h2-db:9092/./testdb
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - mynetworkdocker
+
+  h2-db:
+    image: my-h2-db
+    build:
+      context: .
+      dockerfile: Dockerfile_h2
+    ports:
+      - "9092:9092"
+    volumes:
+      - ./src/main/resources:/h2/testdb
+    networks:
+      - mynetworkdocker
+
+networks:
+  mynetworkdocker:
+    driver: bridge
